@@ -5,7 +5,10 @@
           "@styles/*": ["styles/*"],
           "@common/*": ["common/*"],
           "@components/*": ["components/*"],
-          "@layout/*": ["layout/*"]
+          "@layout/*": ["layout/*"],
+          "@hooks/*": ["hooks/*"],
+          "@services/*": ["services/*"],
+          "@api/*": ["services/api/*"]
       }
   }
 }
