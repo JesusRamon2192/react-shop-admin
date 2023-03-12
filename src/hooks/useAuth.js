@@ -16,7 +16,7 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
-  const [error, setError]=useState();
+  const [error, setError] = useState();
 
   const signIn = async (email, password) => {
     const options = {
@@ -28,9 +28,9 @@ function useProvideAuth() {
     const { data: access_token } = await axios.post(endPoints.auth.login, { email, password }, options);
 
     console.log(access_token);
-    if(access_token){
+    if (access_token) {
       Cookie.set('token', access_token.access_token, {
-        expires: 5
+        expires: 5,
       });
     }
   };
