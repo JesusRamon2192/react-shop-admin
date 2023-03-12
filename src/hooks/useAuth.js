@@ -16,6 +16,7 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
+  const [error, setError]=useState();
 
   const signIn = async (email, password) => {
     const options = {
@@ -37,5 +38,7 @@ function useProvideAuth() {
   return {
     user,
     signIn,
+    error,
+    setError,
   };
 }
