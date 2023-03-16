@@ -1,15 +1,39 @@
-import endPoints from "@services/api";
-import useFetch from "@hooks/useFetch";
+import endPoints from '@services/api';
+import useFetch from '@hooks/useFetch';
+import { Chart } from '@common/Chart';
 
 const PRODUCT_LIMIT = 15;
 const PRODUCT_OFFSET = 15;
 
 export default function Dashboard() {
   const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, PRODUCT_OFFSET));
-  console.log(products);
+  //Con categoryNames se conoce cuántos elementos están dentro de las categorías
+  const categoryNames = products?.map((product) => product.category);
+  //Con categoryCount se conocen los nombres de las categorías
+  const categoryCount = categoryNames?.map((category) => category.name);
+
+  /* console.log(categoryNames);
+  console.log(categoryCount);*/
+
+  //Con countOcurrences se conoce el número de ocurrencias (frecuencia) que aparece cada categoría
+  //Lógiga constante = (array, value) => array.reduce((a,v) => (v === value? a + 1: a), 0);
+  const countOcurrences = (arr) => arr.reduce((prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev), {});
+  /* console.log(countOcurrences(categoryCount)) */
+  //El objeto data contiene la información necesaria para el gráfico
+  const data = {
+    datasets: [
+      {
+        label: 'Categories',
+        data: countOcurrences(categoryCount),
+        borderWidth: 2,
+        backgroundColor: ['#ffbb11', '#c0c0c0', '#50AF95', '#f3ba2f', '#2a71d0'],
+      },
+    ],
+  };
 
   return (
     <>
+      <Chart className="mb-8 mt-2" chartData={data} />
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
