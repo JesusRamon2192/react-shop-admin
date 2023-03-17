@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import  addProduct  from '@services/api/product';
 
 export default function FormProduct() {
     const formRef = useRef (null);
@@ -10,10 +11,12 @@ export default function FormProduct() {
             title: formData.get('title'),
             price: parseInt(formData.get('price')),
             description: formData.get('description'),
-            categoryId: parseInt(formData.get('category')),
+            categoryId: parseInt(formData.get('categoryId')),
             images: [formData.get('images').name],
         };
-        console.log(data);
+        addProduct(data).then((response) => {
+          console.log(response);
+        });
     };
     return (
       <form ref={formRef} onSubmit={handleSubmit}>
@@ -50,14 +53,14 @@ export default function FormProduct() {
               </div>
               <div className="col-span-6">
                 <label
-                  htmlFor="category"
+                  htmlFor="categoryId"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Category
+                  categoryId
                 </label>
                 <select
-                  id="category"
-                  name="category"
+                  id="categoryId"
+                  name="categoryId"
                   autoComplete="category-name"
                   className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
