@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CheckIcon } from '@heroicons/react/solid';
+import { CheckIcon, XCircleIcon } from '@heroicons/react/solid';
 import { PlusIcon } from '@heroicons/react/solid';
 import Modal from '@common/Modal';
 import FormProduct from '@components/FormProduct';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import endPoints from '@services/api';
 import useAlert from '@hooks/useAlert';
 import Alert from '@common/Alert';
+import { deleteProduct } from '@services/api/product';
 
 export default function Products() {
   const [open, setOpen] = useState(false);
@@ -14,16 +15,27 @@ export default function Products() {
   const { alert, setAlert, toggleAlert } = useAlert();
 
   useEffect(() => {
-    async function getProducts(){
+    async function getProducts() {
       const response = await axios.get(endPoints.products.allProducts);
       setProducts(response.data);
     }
     try {
       getProducts();
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
-  },[alert])
+  }, [alert]);
+
+  const handleClose = (id) => {
+    deleteProduct(id).then(() => {
+      setAlert({
+        active: true,
+        message: 'Delete product successfully',
+        type: 'error',
+        autoClose: true,
+      });
+    });
+  };
   return (
     <>
       <Alert alert={alert} handleClose={toggleAlert} />
@@ -98,9 +110,7 @@ export default function Products() {
                         </a>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Delete
-                        </a>
+                        <XCircleIcon className="flex-shrink-0 h-6 w-6 text-gray-400 cursor-pointer" onClick={() => handleClose(product.id)} aria-hidden="true" />
                       </td>
                     </tr>
                   ))}
@@ -111,7 +121,7 @@ export default function Products() {
         </div>
       </div>
       <Modal open={open} setOpen={setOpen}>
-        <FormProduct setAlert= {setAlert} setOpen= {setOpen}/>
+        <FormProduct setAlert={setAlert} setOpen={setOpen} />
       </Modal>
     </>
   );
