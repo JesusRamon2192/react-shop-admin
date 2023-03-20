@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useAlert = () => {
+const useAlert = (options) => {
     const defaultOptions = {
         active: false,
         message: "",
