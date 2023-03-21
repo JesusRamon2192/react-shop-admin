@@ -1,9 +1,10 @@
 import { useRef } from 'react';
+import axios from 'axios'; //Se usa axios para hacer las peticiones
 import addProduct from '@services/api/product';
 
-export default function FormProduct({ setOpen, setAlert }) {
+export default function FormProduct({ setOpen, setAlert, product }) {
   const formRef = useRef(null);
-
+  console.log(product);
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(formRef.current);
@@ -42,13 +43,13 @@ export default function FormProduct({ setOpen, setAlert }) {
               <label htmlFor="title" className="block text-sm font-medium text-gray-700">
                 Title
               </label>
-              <input type="text" name="title" id="title" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+              <input defaultValue={product?.title} type="text" name="title" id="title" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>
             <div className="col-span-6 sm:col-span-3">
               <label htmlFor="price" className="block text-sm font-medium text-gray-700">
                 Price
               </label>
-              <input type="number" name="price" id="price" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+              <input defaultValue={product?.price} type="number" name="price" id="price" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>
             <div className="col-span-6">
               <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700">
@@ -57,6 +58,7 @@ export default function FormProduct({ setOpen, setAlert }) {
               <select
                 id="categoryId"
                 name="categoryId"
+                defaultValue={product?.categoryId}
                 autoComplete="category-name"
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
@@ -73,6 +75,7 @@ export default function FormProduct({ setOpen, setAlert }) {
                 Description
               </label>
               <textarea
+              defaultValue={product?.description}
                 name="description"
                 id="description"
                 autoComplete="description"
@@ -99,7 +102,7 @@ export default function FormProduct({ setOpen, setAlert }) {
                         className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                       >
                         <span>Upload a file</span>
-                        <input id="images" name="images" type="file" className="sr-only" />
+                        <input defaultValue={product?.images} id="images" name="images" type="file" className="sr-only" />
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>
