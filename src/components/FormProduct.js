@@ -5,6 +5,7 @@ import { addProduct, updateProduct } from '@services/api/product';
 
 export default function FormProduct({ setOpen, setAlert, product }) {
   const formRef = useRef(null);
+  const router = useRouter()
   console.log(product);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,9 +18,9 @@ export default function FormProduct({ setOpen, setAlert, product }) {
       images: [formData.get('images').name],
     };
     if (product) {
-      console.log(data);
       updateProduct(product.id, data).then((response) => {
         console.log(response);
+        router.push('/dashboard/products/');
       });
     } else {
       addProduct(data)
