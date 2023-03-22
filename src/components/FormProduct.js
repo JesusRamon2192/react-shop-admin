@@ -5,7 +5,7 @@ import { addProduct, updateProduct } from '@services/api/product';
 
 export default function FormProduct({ setOpen, setAlert, product }) {
   const formRef = useRef(null);
-  const router = useRouter()
+  const router = useRouter();
   console.log(product);
   const handleSubmit = (event) => {
     event.preventDefault();
